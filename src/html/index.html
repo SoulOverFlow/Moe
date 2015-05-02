@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="assets/js/lib/require.min.js"></script>
+    <script>
+        requirejs.config({
+            baseUrl: './',
+            paths  : {
+                'moe': '../dist/js/moe.min'
+            }
+        });
+        require(['moe'], function (theme) {
+            console.log(theme)
+        });
+    </script>
+</head>
+<body>
+
+<p>demo depends:</p>
+
+<ol>
+    <li><strong>RequireJS</strong> v2.1.17</li>
+</ol>
+
+</body>
+</html>

@@ -7,21 +7,26 @@ var path = require('path');
 var rename = require("gulp-rename");
 var dirSync = require('gulp-directory-sync');
 var minifyCSS = require('gulp-minify-css');
+var uglify = require('gulp-uglify');
 
+gulp.task('default', ['build']);
 
 gulp.task("build", ["style:build", "script:build"], function () {});
 gulp.task("style:build", ["style:less", "style:copy-lib", "style:copy-font"], function () {});
 gulp.task("script:build", ["script:copy-lib"], function () {});
 
-gulp.task("scripts:index", function () {
-
-    return gulp.src("./src/**/*.js")
-        .pipe(amdOptimize("index", {
-            exclude: ['jquery']
-        }))
-        .pipe(concat("index.js"))
+// 编译脚本
+gulp.task("scripts:compile", function () {
+    return gulp.src("src/js/**/*.js")
+        .pipe(amdOptimize("moe", {wrapShim: true}))
+        .pipe(concat("moe.js"))
         .pipe(gulp.dest("dist/js"));
-
+});
+gulp.task("scripts:minify", ["scripts:compile"], function () {
+    return gulp.src("dist/js/moe.js")
+        .pipe(concat("moe.min.js"))
+        .pipe(uglify())
+        .pipe(gulp.dest("dist/js"));
 });
 
 
